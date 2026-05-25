@@ -1,4 +1,5 @@
 from utils import *
+from var import *
 from random import randint
 
 NAME: str = "ARES-7"
@@ -197,18 +198,23 @@ def zusammenfassung():
         raise ConnectionRefusedError
 
 
+def generateWorld():
+    pass
+
+
 def main() -> None:
-    clear()
-    intro()
-    while True:
-        try:
-            clear()
-            parameter()
-            clear()
-            zusammenfassung()
-            break
-        except ConnectionRefusedError:
-            continue
+    # clear()
+    # intro()
+    # while True:
+    #     try:
+    #         clear()
+    #         parameter()
+    #         clear()
+    #         zusammenfassung()
+    #         break
+    #     except ConnectionRefusedError:
+    #         continue
+    generateWorld()
 
 
 if __name__ == "__main__":
