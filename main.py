@@ -3,9 +3,16 @@ from var import *
 from random import randint
 
 NAME: str = "ARES-7"
-START_POS = {"x": 0, "y": 0}
+PLAYER = {"x": 0, "y": 0}
 START_WINKEL: int = 0
 SCHWIERIGKEITSGRAD: str = "mittel"
+
+WORLD = {
+    "krater": [],
+    "solarstation": [],
+    "checkpoint": [],
+    "ziel": []
+}
 
 
 def intro() -> None:
@@ -57,7 +64,7 @@ def parameter() -> None:
     """
         START POSITION
     """
-    global START_POS
+    global PLAYER
     print()
     centerText("[2/4] START POSITION", "=")
     print("Wo startet der Rover?")
@@ -98,10 +105,10 @@ def parameter() -> None:
                 print()
                 print("Keine gültige Y Position")
                 print("Position wird ausgewürfelt.")
-    START_POS["x"] = pos_x  # pyright: ignore[reportPossiblyUnboundVariable]
-    START_POS["y"] = pos_y  # pyright: ignore[reportPossiblyUnboundVariable]
+    PLAYER["x"] = pos_x  # pyright: ignore[reportPossiblyUnboundVariable]
+    PLAYER["y"] = pos_y  # pyright: ignore[reportPossiblyUnboundVariable]
     print()
-    print(f"Dein Rover startet bei X:{START_POS['x']} Y:{START_POS['y']}")
+    print(f"Dein Rover startet bei X:{PLAYER['x']} Y:{PLAYER['y']}")
     """
         START WINKEL
     """
@@ -186,7 +193,7 @@ def zusammenfassung():
     centerText("Zusammenfassung")
     h_line()
     centerText(f"Rover-Name: {NAME.upper()}")
-    centerText(f"Startposition: ({START_POS['x']}|{START_POS['y']})")
+    centerText(f"Startposition: ({PLAYER['x']}|{PLAYER['y']})")
     centerText(f"Startwinkel: {START_WINKEL}°")
     centerText(
         f"Schwierigkeit: {SCHWIERIGKEITSGRAD.capitalize()}")
@@ -199,7 +206,20 @@ def zusammenfassung():
 
 
 def generateWorld():
-    pass
+    global WORLD
+    match getQuad(PLAYER):
+        case 5:
+            WORLD["ziel"].append(getValidCords(WORLD))
+        case 4:
+            WORLD["ziel"].append(getValidCords(WORLD, 2))
+        case 3:
+            WORLD["ziel"].append(getValidCords(WORLD, 1))
+        case 2:
+            WORLD["ziel"].append(getValidCords(WORLD, 4))
+        case 1:
+            WORLD["ziel"].append(getValidCords(WORLD, 3))
+
+            # ZIEL FERTIG WEITER MORGEN
 
 
 def main() -> None:
